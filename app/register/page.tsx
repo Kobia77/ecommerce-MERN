@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
-import { Particles } from "../../components/Particles";
-import { Toggle } from "../../components/Toggle";
-import { Input } from "../../components/Input";
-import { Textarea } from "../../components/Textarea";
+import { Particles } from "../../components/registerForm/Particles";
+import { Toggle } from "../../components/registerForm/Toggle";
+import { Input } from "../../components/registerForm/Input";
+import { Textarea } from "../../components/registerForm/Textarea";
 import Image from "next/image";
 
 interface FormData {
