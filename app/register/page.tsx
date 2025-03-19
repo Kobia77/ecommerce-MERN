@@ -37,9 +37,6 @@ export default function CompleteProfile() {
     if (!user) return;
     
     const payload = {
-      clerkId: user.id,
-      email: user.primaryEmailAddress?.emailAddress,
-      name: user.firstName || user.fullName,
       role: data.role === "seller" ? "seller" : "customer",
       storeName: data.role === "seller" ? data.storeName : undefined,
       storeDescription: data.role === "seller" ? data.storeDescription : undefined,

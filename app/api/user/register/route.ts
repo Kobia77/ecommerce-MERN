@@ -14,50 +14,38 @@ export const POST = withAuth(async (request: Request, authenticatedClerkId: stri
   try {
     await connectDB();
 
-    const {
-      clerkId,
-      role,
-      email,
-      name,
-      storeName,
-      storeDescription,
-      shippingAddress,
-    } = await request.json();
+    const { role, name: overrideName, storeName, storeDescription, shippingAddress } =
+      await request.json();
 
-    if (!clerkId || !role || !email) {
-      const payload = { error: "Missing required fields: clerkId, role, email" };
+    if (!role) {
+      const payload = { error: "Missing required field: role" };
       logResponse(400, payload);
       return NextResponse.json(payload, { status: 400 });
     }
 
-    // Verify that the provided clerkId actually exists in Clerk
-    try {
-      const clerk = await clerkClient();
-      await clerk.users.getUser(clerkId);
-    } catch {
-      const payload = { error: "Invalid clerkId" };
-      logResponse(400, payload);
-      return NextResponse.json(payload, { status: 400 });
+    // Fetch the authenticated Clerk user
+    const clerk = await clerkClient();
+    const clerkUser = await clerk.users.getUser(authenticatedClerkId);
+    const emailObj = clerkUser.emailAddresses.find((e) => e.id === clerkUser.primaryEmailAddressId);
+    const email = emailObj?.emailAddress;
+    if (!email) {
+      const payload = { error: "Could not retrieve primary email from Clerk" };
+      logResponse(500, payload);
+      return NextResponse.json(payload, { status: 500 });
     }
 
-    // Ensure the request body’s clerkId matches the authenticated user’s Clerk ID
-    if (clerkId !== authenticatedClerkId) {
-      const payload = { error: "Forbidden — clerkId mismatch" };
-      logResponse(403, payload);
-      return NextResponse.json(payload, { status: 403 });
-    }
-
-    if (await User.findOne({ clerkId })) {
+    // Prevent duplicate registrations
+    if (await User.findOne({ clerkId: authenticatedClerkId })) {
       const payload = { message: "User already exists" };
       logResponse(400, payload);
       return NextResponse.json(payload, { status: 400 });
     }
 
     const newUser = new User({
-      clerkId,
+      clerkId: authenticatedClerkId,
       role,
       email,
-      name,
+      name: overrideName ?? `${clerkUser.firstName ?? ""} ${clerkUser.lastName ?? ""}`.trim(),
       storeName: role === UserRole.SELLER ? storeName : undefined,
       storeDescription: role === UserRole.SELLER ? storeDescription : undefined,
       shippingAddress: role === UserRole.CUSTOMER ? shippingAddress : undefined,
