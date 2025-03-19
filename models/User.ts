@@ -34,6 +34,7 @@ const UserSchema: Schema = new Schema(
       unique: true,
       lowercase: true,
       trim: true,
+      collation: { locale: 'en', strength: 2 }
     },
     name: { type: String },
     storeName: { type: String },
@@ -41,12 +42,6 @@ const UserSchema: Schema = new Schema(
     shippingAddress: { type: String },
   },
   { timestamps: true }
-);
-
-// Create a case‑insensitive unique index on email
-UserSchema.index(
-  { email: 1 },
-  { unique: true, collation: { locale: 'en', strength: 2 } }
 );
 
 // Pre-save hook to enforce only one admin can exist
