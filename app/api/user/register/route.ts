@@ -55,7 +55,7 @@ export const POST = withAuth(async (request: Request, authenticatedClerkId: stri
 
     const payload = { message: "User registered successfully", user: newUser };
     logResponse(201, payload);
-    return NextResponse.json(payload, { status: 201 });
+    return NextResponse.json({ message: "User registered successfully" }, { status: 201 });
   } catch (unknownError) {
     const error =
       unknownError instanceof Error ? unknownError : new Error(String(unknownError));
