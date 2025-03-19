@@ -6,7 +6,6 @@ import User, { UserRole } from "@/models/User";
 function logResponse(status: number, payload: unknown) {
   if (process.env.NODE_ENV !== "production") {
     console.log(`📤 [${status}] Response:`, payload);
-    console.log("NODE_ENV =", process.env.NODE_ENV);
   }
 }
 
