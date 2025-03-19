@@ -1,4 +1,3 @@
-
 import mongoose, { Schema, Document } from "mongoose";
 
 export enum UserRole {
@@ -29,17 +28,25 @@ const UserSchema: Schema = new Schema(
       enum: [UserRole.ADMIN, UserRole.CUSTOMER, UserRole.SELLER],
       required: true,
     },
-    email: { type: String, required: true },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
     name: { type: String },
-    // For sellers, you might store extra data
     storeName: { type: String },
     storeDescription: { type: String },
-    // For customers, you might store shipping info or preferences
     shippingAddress: { type: String },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
+);
+
+// Create a case‑insensitive unique index on email
+UserSchema.index(
+  { email: 1 },
+  { unique: true, collation: { locale: 'en', strength: 2 } }
 );
 
 // Pre-save hook to enforce only one admin can exist
