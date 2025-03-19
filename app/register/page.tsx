@@ -67,7 +67,9 @@ export default function CompleteProfile() {
       }
     } catch (error) {
       setRegistrationComplete(false);
-      console.error("Error during registration", error);
+      if (process.env.NODE_ENV !== "production") {
+        console.error("Error during registration", error);
+      }
     }
   };
 
