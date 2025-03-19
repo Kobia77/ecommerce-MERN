@@ -59,7 +59,7 @@ export default function CompleteProfile() {
       if (res.ok) {
         // Wait for animation to complete
         setTimeout(() => {
-          router.push(data.role === "seller" ? "/seller/dashboard" : "/");
+          router.push(data.role === "seller" ? "/seller/dashboard" : "/customer/dashboard");
         }, 2000);
       } else {
         setRegistrationComplete(false);

@@ -1,4 +1,4 @@
-// components/Textarea.tsx
+
 "use client";
 
 import { forwardRef, TextareaHTMLAttributes, useState } from "react";

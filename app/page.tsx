@@ -1,5 +1,6 @@
-// app/page.tsx
+
 "use client";
+
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -368,8 +369,7 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <p className="text-gray-600">
-                  "Amazing quality and fast shipping! I'm really impressed with
-                  this product and will definitely be ordering more."
+                &quot;Amazing quality and fast shipping! I&apos;m really impressed with this product and will definitely be ordering more.&quot;
                 </p>
               </div>
             ))}
