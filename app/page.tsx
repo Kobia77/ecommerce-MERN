@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect } from "react";
@@ -15,13 +14,6 @@ import {
 export default function LandingPage() {
   const router = useRouter();
   const { isSignedIn, isLoaded } = useUser();
-
-  useEffect(() => {
-    if (isLoaded && isSignedIn) {
-      // Redirect to /register after successful sign in or sign up
-      router.push("/register");
-    }
-  }, [isLoaded, isSignedIn, router]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-gray-50">
@@ -125,7 +117,7 @@ export default function LandingPage() {
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
-                  href="/products"
+                  href="/dashboard"
                   className="inline-flex justify-center items-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition-colors"
                 >
                   Shop Now
@@ -369,7 +361,9 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <p className="text-gray-600">
-                &quot;Amazing quality and fast shipping! I&apos;m really impressed with this product and will definitely be ordering more.&quot;
+                  &quot;Amazing quality and fast shipping! I&apos;m really
+                  impressed with this product and will definitely be ordering
+                  more.&quot;
                 </p>
               </div>
             ))}

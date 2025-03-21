@@ -86,7 +86,7 @@ export default function CompleteProfile() {
           router.push(
             data.role === "seller" ? "/dashboard/seller" : "/dashboard/customer"
           );
-        }, 1500);
+        }, 800);
       } else {
         setRegistrationComplete(false);
         throw new Error("Registration failed");
